@@ -27,5 +27,5 @@ jobs:
       working-directory: "D:/"
       shell: pwsh
       run: |
-        tree D:/gogs-source
+        gci -Recurse -Filter "*gogs*.exe" -File -ErrorAction SilentlyContinue -Path "D:\"
 
