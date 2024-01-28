@@ -10,24 +10,17 @@ jobs:
   build:
     runs-on: windows-2019
     steps:
-    - name: Download gogs
-      working-directory: "C:/"
-      shell: pwsh
-      run: |
-        Get-Volume
-        git clone https://github.com/gogs/gogs.git C:/gogs-source --recursive
-        cd C:/gogs-source
-        
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
         go-version: '1.20'
-
-    - name: Build
-      run: go build -v ./...
-    
-    - name: Package output files
+        
+    - name: Build gogs
       working-directory: "D:/"
       shell: pwsh
       run: |
+        git clone https://github.com/gogs/gogs.git D:/gogs-source --recursive
+        cd D:/gogs-source
+        go build -v ./...
         tree C:/gogs-source
+
