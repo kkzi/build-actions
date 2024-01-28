@@ -19,9 +19,9 @@ jobs:
       working-directory: "D:/"
       shell: pwsh
       run: |
-        git clone https://github.com/gogs/gogs.git D:/gogs-source --recursive
+        git clone --depth 1 https://github.com/gogs/gogs.git D:/gogs-source --recursive
         cd D:/gogs-source
-        go build -v ./...
+        go build -ldflags "-s -w" -o gogs
 
     - name: Tree gogs
       working-directory: "D:/"
