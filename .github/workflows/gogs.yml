@@ -21,11 +21,17 @@ jobs:
       run: |
         git clone --depth 1 https://github.com/gogs/gogs.git D:/gogs-source --recursive
         cd D:/gogs-source
-        go build -ldflags "-s -w" -o gogs
+        go build -ldflags "-s -w" -o gogs.exe .
 
-    - name: Tree gogs
-      working-directory: "D:/"
-      shell: pwsh
-      run: |
-        gci -Recurse -Filter "*gogs*.exe" -File -ErrorAction SilentlyContinue -Path "D:\"
+    - name: Run UPX
+      uses: crazy-max/ghaction-upx@v3
+      with:
+        version: latest
+        files: |
+          D:/gogs-source/gogs.exe
+        args: -fq -9
 
+    - name: Publish
+      uses: actions/upload-artifact@v3
+      with:
+        path: "D:/gogs-source/gogs.exe"
